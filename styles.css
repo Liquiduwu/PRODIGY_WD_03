@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #1a1a2e);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+h1 {
+    margin-bottom: 2rem;
+    color: #fff;
+    font-size: 3rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+}
+
+.game-mode {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.game-mode button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: linear-gradient(45deg, #00b4d8, #0077b6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    position: relative;
+    opacity: 0.7;
+}
+
+.game-mode button.active {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 180, 216, 0.6);
+    background: linear-gradient(45deg, #00d4ff, #0077b6);
+}
+
+.game-mode button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 180, 216, 0.4);
+}
+
+.game-mode button:active {
+    transform: translateY(0);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.cell {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.cell:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.cell[data-value="X"] {
+    color: #00b4d8;
+}
+
+.cell[data-value="O"] {
+    color: #ff6b6b;
+}
+
+.status {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    min-width: 300px;
+}
+
+#reset {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ff6b6b, #ee5253);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+#reset:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(238, 82, 83, 0.4);
+}
+
+#reset:active {
+    transform: translateY(0);
+}
+
+/* Adding animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.container {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.cell.winner {
+    animation: pulse 0.5s ease-in-out infinite;
+    background: rgba(0, 255, 0, 0.2);
+}
+
+.winning-line {
+    position: absolute;
+    background: white;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.horizontal-line {
+    height: 6px;
+    width: 0;
+    border-radius: 3px;
+    animation: expandHorizontal 0.5s ease forwards;
+}
+
+.vertical-line {
+    width: 6px;
+    height: 0;
+    border-radius: 3px;
+    animation: expandVertical 0.5s ease forwards;
+}
+
+.diagonal-line {
+    height: 6px;
+    width: 0;
+    border-radius: 3px;
+    position: absolute;
+}
+
+.diagonal-right {
+    transform-origin: top left;
+    transform: rotate(45deg);
+    top: 10px;
+    left: 10px;
+    animation: expandDiagonal 0.5s ease forwards;
+}
+
+.diagonal-left {
+    transform-origin: top right;
+    transform: rotate(-45deg);
+    top: 10px;
+    right: 10px;
+    animation: expandDiagonal 0.5s ease forwards;
+}
+
+@keyframes expandHorizontal {
+    to {
+        width: calc(100% - 20px);
+    }
+}
+
+@keyframes expandVertical {
+    to {
+        height: calc(100% - 20px);
+    }
+}
+
+@keyframes expandDiagonal {
+    to {
+        width: 140%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
+    50% { box-shadow: 0 0 30px rgba(0, 180, 216, 0.8); }
+    100% { box-shadow: 0 0 20px rgba(0, 180, 216, 0.6); }
+}
+
+.game-mode button.active {
+    animation: pulse 2s infinite;
+}
+  
